@@ -4,7 +4,7 @@
  * @category 	Admin
  * @package 	deal-of-the-day/Admin
  * @version     1.0
-*/
+ */
 class DD_Shortcode_Deal {
 
 	/**
@@ -14,8 +14,9 @@ class DD_Shortcode_Deal {
 	 * @param array $atts
 	 * @return void
 	 */
-	public static function output( $atts ) {
-		global $wp;
+	public static function output($atts) {
+		global $wp, $dealofday;
+		wp_enqueue_style('deals-listing', $dealofday::plugin_url() . '/assets/css/deals_listing.css');
 		include 'views/deal_of_day_view.php';
 	}
 }

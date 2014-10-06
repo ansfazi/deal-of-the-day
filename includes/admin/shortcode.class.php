@@ -4,7 +4,7 @@
  * @category 	Admin
  * @package 	deal-of-the-day/Admin
  * @version     1.0
-*/
+ */
 class DD_Shortcodes {
 
 	/**
@@ -19,10 +19,10 @@ class DD_Shortcodes {
 	public static function init() {
 		// Define shortcodes
 		$shortcodes = array(
-			'deal_of_day'                    => __CLASS__ . '::deal_of_day',
+			'deal_of_day' => __CLASS__ . '::deal_of_day',
 		);
-		foreach ( $shortcodes as $shortcode => $function ) {
-			add_shortcode( apply_filters( "{$shortcode}_shortcode_tag", $shortcode ), $function );
+		foreach ($shortcodes as $shortcode => $function) {
+			add_shortcode(apply_filters("{$shortcode}_shortcode_tag", $shortcode), $function);
 		}
 
 	}
@@ -36,20 +36,20 @@ class DD_Shortcodes {
 	 */
 	public static function dd_shortcode_wrapper(
 		$function,
-		$atts    = array(),
+		$atts = array(),
 		$wrapper = array(
-			'class'  => 'dod',
+			'class' => 'dod',
 			'before' => null,
-			'after'  => null
+			'after' => null
 		)
 	) {
 		ob_start();
 
-		$before 	= empty( $wrapper['before'] ) ? '<div class="' . esc_attr( $wrapper['class'] ) . '">' : $wrapper['before'];
-		$after 		= empty( $wrapper['after'] ) ? '</div>' : $wrapper['after'];
+		$before = empty($wrapper['before']) ? '<div class="' . esc_attr($wrapper['class']) . '">' : $wrapper['before'];
+		$after = empty($wrapper['after']) ? '</div>' : $wrapper['after'];
 
 		echo $before;
-		call_user_func( $function, $atts );
+		call_user_func($function, $atts);
 		echo $after;
 
 		return ob_get_clean();
@@ -61,8 +61,8 @@ class DD_Shortcodes {
 	 * @param mixed $atts
 	 * @return string
 	 */
-	public static function deal_of_day( $atts ) {
-		return self::dd_shortcode_wrapper( array( 'DD_Shortcode_Deal', 'output' ), $atts );
+	public static function deal_of_day($atts) {
+		return self::dd_shortcode_wrapper(array('DD_Shortcode_Deal', 'output'), $atts);
 	}
 
 }

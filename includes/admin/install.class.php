@@ -12,29 +12,31 @@ class DD_Install {
 	 */
 	public function __construct() {
 		// Run this on activation.
-		register_activation_hook( DD_PLUGIN_FILE, array( $this, 'install' ) );
+		register_activation_hook(DD_PLUGIN_FILE, array($this, 'install'));
 		// Hooks
-		add_action( 'admin_init', array( $this, 'install_actions' ) );
+		add_action('admin_init', array($this, 'install_actions'));
 	}
 
 	/**
 	 * Install actions such as installing pages when a button is clicked.
+	 * @return void
 	 */
 	public function install_actions() {
 		// Install - Add pages button
-		if ( ! empty( $_GET['install_dd_pages'] )  || !get_option( 'dod_installed' ) ) {
+		if (!empty($_GET['install_dd_pages']) || !get_option('dod_installed')) {
 			self::create_pages();
 			$this->create_tables();
-			update_option('dod_installed', true );
+			update_option('dod_installed', true);
 		}
 	}
 	/**
 	 * Install DD
+	 * @return void
 	 */
 	public function install() {
 		// Check if pages are needed
-		if ( dd_get_page_id( 'shop' ) < 1 ) {
-			update_option( '_wc_needs_pages', 1 );
+		if (dd_get_page_id('shop') < 1) {
+			update_option('_wc_needs_pages', 1);
 		}
 
 	}
@@ -45,28 +47,28 @@ class DD_Install {
 	 * @return void
 	 */
 	public static function create_pages() {
-		$pages = apply_filters( 'woocommerce_create_pages', array(
+		$pages = apply_filters('woocommerce_create_pages', array(
 			'deal-of-the-day' => array(
-				'name'    => _x( 'deal-of-the-day', 'Page slug', 'dealoftheday' ),
-				'title'   => _x( 'Deal of the Day', 'Page title', 'dealoftheday' ),
-				'content' => '[deal_of_day]'
+				'name' => _x('deal-of-the-day', 'Page slug', 'dealoftheday'),
+				'title' => _x('Deal of the Day', 'Page title', 'dealoftheday'),
+				'content' => '[deal_of_day]',
 			)
-		) );
-		foreach ( $pages as $key => $page ) {
-			dd_create_page( esc_sql( $page['name'] ), 'dod_page_id', $page['title'], $page['content'], '' );
+		));
+		foreach ($pages as $key => $page) {
+			dd_create_page(esc_sql($page['name']), 'dod_page_id', $page['title'], $page['content'], '');
 		}
 	}
 	private function create_tables() {
 		global $wpdb;
 		//  Tables
 		$collate = '';
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+		require_once (ABSPATH . 'wp-admin/includes/upgrade.php');
 
-		if ( $wpdb->has_cap( 'collation' ) ) {
-			if ( ! empty($wpdb->charset ) ) {
+		if ($wpdb->has_cap('collation')) {
+			if (!empty($wpdb->charset)) {
 				$collate .= "DEFAULT CHARACTER SET $wpdb->charset";
 			}
-			if ( ! empty($wpdb->collate ) ) {
+			if (!empty($wpdb->collate)) {
 				$collate .= " COLLATE $wpdb->collate";
 			}
 		}
@@ -80,8 +82,8 @@ class DD_Install {
 	  PRIMARY KEY  (id),
 	  KEY attribute_name (id)
 	) $collate;
-	";
-		dbDelta( $dod_tables );
+";
+		dbDelta($dod_tables);
 	}
 }
 return new DD_Install();

@@ -1,0 +1,94 @@
+table,
+table td {
+    border: 0;
+}
+table td {
+    vertical-align: top;
+}
+table td {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+.deal-wrapper {
+    padding: 5px;
+    border: 1px solid #eee;
+    position: relative;
+    margin-bottom: 10px;
+}
+.deal-wrapper .title {
+    font-size: 14px;
+}
+.deal-wrapper .title a {
+    text-decoration: none;
+}
+.deal-content {
+    z-index: 10;
+    min-height: 300px;
+}
+.deal-detail {
+    width: 60%;
+    float: left;
+    ;
+}
+.deal-image {
+    width: 40%;
+    float: left;
+}
+.deal-image .img {
+    /* border: 1px solid #ccc; */
+    padding: 5px;
+    margin-top: 30px;
+    min-height: 300px;
+}
+.deal-footer p {
+    font-size: 12px;
+    clear: both;
+}
+.deal-dates {
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px;
+    text-align: center;
+}
+.deal-buynow {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    min-height: 25px;
+}
+.deal-buynow .price {
+    float: left;
+}
+.deal-buynow .buynow {
+    float: right;
+}
+.myButton {
+    background-color: #44c767;
+    -moz-border-radius: 28px;
+    -webkit-border-radius: 28px;
+    border-radius: 28px;
+    border: 1px solid #18ab29;
+    display: inline-block;
+    cursor: pointer;
+    color: #fff !important;
+    font-family: arial;
+    font-size: 23px;
+    padding: 11px 90px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #2f6627;
+}
+.myButton:hover {
+    background-color: #5cbf2a;
+    color: #ffffff;
+    text-decoration: none;
+}
+.featured {
+    z-index: 5;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 70px;
+    border: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+}
