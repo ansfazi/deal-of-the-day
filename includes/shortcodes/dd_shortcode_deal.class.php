@@ -19,4 +19,11 @@ class DD_Shortcode_Deal {
 		wp_enqueue_style('deals-listing', $dealofday::plugin_url() . '/assets/css/deals_listing.css');
 		include 'views/deal_of_day_view.php';
 	}
+	/**
+	 * return int
+	 */
+	public static function is_expired($date) {
+		return strtotime($date) <= time();
+	}
+
 }
