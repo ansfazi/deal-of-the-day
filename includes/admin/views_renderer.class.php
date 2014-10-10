@@ -79,32 +79,13 @@ if (!class_exists('DD_Admin_Menus')):
 		include 'views/_geneal_settings.php';
 	}
 	/**
-	 * Renders the deals reorder
-	 * @return void
-	 */
-	public static function reorder() {
-		$msg = '';
-
-		global $dealofday;
-		$args = array();
-		$args['post_type'] = 'product';
-		$args['meta_key'] = 'dod_is_in_dod';
-		$args['meta_value'] = 'on';
-		$args['orderby'] = "menu_order";
-		$args['order'] = 'ASC';
-		add_filter('posts_results', array(&$dealofday, 'order_by_featured'), PHP_INT_MAX, 2);
-		$query = new WP_Query($args);
-
-		include 'views/_reorder_deals.php';
-		wp_enqueue_script('jquery-ui-sortable');
-	}
-	/**
 	 * Renders the deals list in Admin panel,
 	 * @return void
 	 */
 	public static function list_deals() {
 		$msg = '';
 		$query = self::getDeals();
+		wp_enqueue_script('jquery-ui-sortable');// including sortable js library
 		include 'views/_list_deals.php';
 	}
 	/**

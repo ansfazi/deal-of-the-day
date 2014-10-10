@@ -44,9 +44,9 @@ if (!class_exists('DD_Admin_Menus')):
 			$page = $query->posts[0];
 			$custom_css = array_shift(get_post_meta($page_id, 'dod_custom_css'));
 			$templates = get_page_templates();
-
-			include 'views/html-deals-page.php';
+			die;
 			wp_enqueue_script('jquery-ui-sortable');// including sortable js library
+			include 'views/html-deals-page.php';
 		}
 	}
 

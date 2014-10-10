@@ -2,15 +2,30 @@
 <?php include '_header.php';?>
 
 <h2>Deal Page Title</h2>
-
-<a href="<?php echo site_url()?>?page_id=<?php echo get_option('dod_page_id')?>" target="_blank">View Page</a>
+<p>
+    <a href="<?php echo site_url()?>?page_id=<?php echo get_option('dod_page_id')?>" target="_blank">View Page</a> |
+    <a href="<?php echo site_url()?>/wp-admin/post-new.php?post_type=product" target="_blank">Add New Product</a>
+</p>
 <style type="text/css">
     .last-row th {border-top: 1px solid #e1e1e1;}
-    #sortable { list-style-type: none; margin: 10px 0 0; padding: 0; width: 100%; }
+    #sortable { list-style-type: none; margin:  0; padding: 0; width: 100%; }
     #sortable ul { margin-left:20px; list-style: none; }
-    #sortable li { padding: 2px 0px; margin: 4px 0px;  border: 1px solid #DDDDDD; cursor: move; -moz-border-radius:6px;}
-    #sortable li span { display: block; background: #f9f8f8;  padding: 5px 10px; color:#555; font-size:13px; font-weight:bold;}
-    #sortable li.placeholder{border: dashed 2px #ccc;height:25px;}
+
+    #sortable li { padding: 4px 0px; margin: 0px 0px; -moz-border-radius:6px; height: 45px;}
+    #sortable li.placeholder{border: dashed 2px #ccc;height:45px;}
+
+    .row-action{ display: none; }
+    .row-action .id{ color: #666; }
+    /* #sortable li:hover { display: block; background: #a3a3a3} */
+    #sortable li:hover .row-action{ display: block;}
+    .products-list{ background: #fff ; border: 1px solid #e5e5e5; -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.04);box-shadow: 0 1px 1px rgba(0,0,0,.04); }
+    .products-list>.thead{  min-height: 35px; background: #fff;line-height: 35px; border-bottom: 1px solid #ddd; }
+    .products-list .thead:last-child{  min-height: 35px; background: #fff;line-height: 35px; border-top: 1px solid #ddd; }
+    .products-list .th{ float: left; width: 24%; padding: 0 5px;}
+    .ui-sortable .tr{ width: 100%; clear: both; min-height: 25px;}
+    .ui-sortable .tr div{ width: 24%; float: left; line-height: 25px;  padding: 0px 5px;}
+    .products-list .reorder{ cursor: move;}
+    /*     .products-list li .row-action { display: block;} */
 </style>
   <script type="text/javascript" >
     jQuery(document).ready(function($) {
@@ -47,34 +62,77 @@
                 }
             });
         });
+
+        jQuery("#sortable").sortable({
+            'tolerance':'intersect',
+            'cursor':'pointer',
+            'items':'li',
+            'placeholder':'placeholder',
+            'nested': 'ul'
+        });
+        jQuery("#sortable").disableSelection();
+        jQuery("#save-order").bind( "click", function() {
+            jQuery.post( ajaxurl, { action:'update_deals_order', order:jQuery("#sortable").sortable("serialize") }, function() {
+                jQuery("#ajax-response").html('<div class="message updated fade"><p><?php _e('Items Order Updated', 'cpt')?></p></div>');
+                jQuery("#ajax-response div").delay(3000).hide("slow");
+            });
+        });
     });
 </script>
 <?php
 if (count($query->posts)) {?>
-<table class="wp-list-table widefat fixed posts" >
+<!-- <table class="wp-list-table products-list widefat fixed posts" >
     <thead>
-        <tr>
-            <th width="20"><strong>ID</strong></th>
-            <th><strong>Page</strong></th>
-            <th><strong>Deal status</strong></th>
-            <th><strong>Featured Deal</strong></th>
-            <th><strong>re-order</strong></th>
-        </tr>
-    </thead>
+        <div>
+            <div class="th" width="20"><strong>ID</strong></div>
+            <div class="th"><strong>Page</strong></div>
+            <div class="th"><strong>Deal status</strong></div>
+            <div class="th"><strong>Featured Deal</strong></div>
+            <div class="th"><strong>re-order</strong></div>
+        </div>
+    </thead> -->
+    <div class="products-list">
+        <div class="thead">
+            <!-- <div class="th" width="20"><strong>ID</strong></div> -->
+            <div class="th"><strong>Product</strong></div>
+            <div class="th"><strong>Deal status</strong></div>
+            <div class="th"><strong>Featured Deal</strong></div>
+            <div class="th"><strong>re-order</strong></div>
+        </div>
+    <ul id="sortable" class="ui-sortable">
 <?php
-foreach ($query->posts as $key => $p) {
-	$hold = array_shift(get_post_meta($p->ID, 'dod_active_deal'));
-	$is_featured = array_shift(get_post_meta($p->ID, 'dod_featured_deal'));
-	?>
-    <tr id="row_<?php echo $p->ID;?>">
-        <td><?php echo $p->ID;?></td>
-        <td><?php echo $p->post_title;?></td>
-        <td> Active Deal  <input type="checkbox" name="<?php echo $p->ID . 'dod_active_deal'?>" class="dod_deal_status" value="<?php echo $p->ID;?>" <?php is_checked($hold);?> ></td>
-        <td> <input type="checkbox" name="<?php echo $p->ID . 'featured_deal'?>" class="featured_deal" value="<?php echo $p->ID;?>" <?php is_checked($is_featured);?> ></td>
-        <td> <?php echo ++$i;?></td>
-    </tr>
+global $dealofday;
+	foreach ($query->posts as $key => $p) {
+		$hold = array_shift(get_post_meta($p->ID, 'dod_active_deal'));
+		$is_featured = array_shift(get_post_meta($p->ID, 'dod_featured_deal'));
+		?>
+            <li id="item_<?php echo $p->ID;?>">
+                <div id="row_<?php echo $p->ID;?>" class="tr">
+                 <!--    <div><?php echo $p->ID;?></div> -->
+                    <div>
+                    <strong><?php echo $p->post_title;?></strong>
+                        <span class="row-action">
+                            <span class="id">ID: <?php echo $p->ID;?> |</span>
+                            <span class="edit"><a href="<?php echo site_url();?>/wp-admin/post.php?post=<?php echo $p->ID;?>&amp;action=edit" target="_blank">Edit</a>|</span>
+                            <span class="view"><a href="<?php echo get_permalink($p->ID);?>" target="_blank"> View </a></span>
+                        </span>
+                    </div>
+                    <div> Active Deal  <input type="checkbox" name="<?php echo $p->ID . 'dod_active_deal'?>" class="dod_deal_status" value="<?php echo $p->ID;?>" <?php is_checked($hold);?> ></div>
+                    <div> <input type="checkbox" name="<?php echo $p->ID . 'featured_deal'?>" class="featured_deal" value="<?php echo $p->ID;?>" <?php is_checked($is_featured);?> ></div>
+                    <div class="reorder"> <img src="<?php echo $dealofday::plugin_url()?>/assets/images/move.jpg" alt=""></div>
+                </div>
+            </li>
 <?php }?>
-<thead class="last-row">
+</ul>
+         <div class="thead">
+            <!-- <div class="th" width="20"><strong>ID</strong></div> -->
+            <div class="th"><strong>Page</strong></div>
+            <div class="th"><strong>Deal status</strong></div>
+            <div class="th"><strong>Featured Deal</strong></div>
+            <div class="th"><strong>re-order</strong></div>
+        </div>
+    </div>
+    <!-- <thead class="last-row">
         <tr>
             <th width="20"><strong>ID</strong></th>
             <th><strong>Page</strong></th>
@@ -83,7 +141,7 @@ foreach ($query->posts as $key => $p) {
             <th><strong>re-order</strong></th>
         </tr>
     </thead>
-</table>
+</table> -->
 <?php } else {
 	echo 'No Products added yet. Click to <a href="">Add New Product</a>';
 }?>
