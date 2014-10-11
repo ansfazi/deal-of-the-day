@@ -10,13 +10,10 @@
     .last-row th {border-top: 1px solid #e1e1e1;}
     #sortable { list-style-type: none; margin:  0; padding: 0; width: 100%; }
     #sortable ul { margin-left:20px; list-style: none; }
-
     #sortable li { padding: 4px 0px; margin: 0px 0px; -moz-border-radius:6px; height: 45px;}
     #sortable li.placeholder{border: dashed 2px #ccc;height:45px;}
-
     .row-action{ display: none; }
     .row-action .id{ color: #666; }
-    /* #sortable li:hover { display: block; background: #a3a3a3} */
     #sortable li:hover .row-action{ display: block;}
     .products-list{ background: #fff ; border: 1px solid #e5e5e5; -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.04);box-shadow: 0 1px 1px rgba(0,0,0,.04); }
     .products-list>.thead{  min-height: 35px; background: #fff;line-height: 35px; border-bottom: 1px solid #ddd; }
@@ -25,7 +22,7 @@
     .ui-sortable .tr{ width: 100%; clear: both; min-height: 25px;}
     .ui-sortable .tr div{ width: 24%; float: left; line-height: 25px;  padding: 0px 5px;}
     .products-list .reorder{ cursor: move;}
-    /*     .products-list li .row-action { display: block;} */
+    div.error, div.updated{ margin-bottom: 8px;}
 </style>
   <script type="text/javascript" >
     jQuery(document).ready(function($) {
@@ -68,32 +65,22 @@
             'cursor':'pointer',
             'items':'li',
             'placeholder':'placeholder',
-            'nested': 'ul'
+            'nested': 'ul',
         });
-        jQuery("#sortable").disableSelection();
-        jQuery("#save-order").bind( "click", function() {
+        jQuery("#sortable" ).on( "sortupdate", function( event, ui ) {
+            jQuery("#sortable").disableSelection();
             jQuery.post( ajaxurl, { action:'update_deals_order', order:jQuery("#sortable").sortable("serialize") }, function() {
-                jQuery("#ajax-response").html('<div class="message updated fade"><p><?php _e('Items Order Updated', 'cpt')?></p></div>');
-                jQuery("#ajax-response div").delay(3000).hide("slow");
+                jQuery("#ajax-response").html('<div class="messadge updated fade"><p><?php _e("Deals reordered", "deal-of-day")?></p></div>');
+                jQuery("#ajax-response div").delay(2000).fadeOut("slow");
             });
-        });
+         } );
     });
 </script>
+<div id="ajax-response"></div>
 <?php
 if (count($query->posts)) {?>
-<!-- <table class="wp-list-table products-list widefat fixed posts" >
-    <thead>
-        <div>
-            <div class="th" width="20"><strong>ID</strong></div>
-            <div class="th"><strong>Page</strong></div>
-            <div class="th"><strong>Deal status</strong></div>
-            <div class="th"><strong>Featured Deal</strong></div>
-            <div class="th"><strong>re-order</strong></div>
-        </div>
-    </thead> -->
-    <div class="products-list">
+<div class="products-list">
         <div class="thead">
-            <!-- <div class="th" width="20"><strong>ID</strong></div> -->
             <div class="th"><strong>Product</strong></div>
             <div class="th"><strong>Deal status</strong></div>
             <div class="th"><strong>Featured Deal</strong></div>
@@ -125,23 +112,13 @@ global $dealofday;
 <?php }?>
 </ul>
          <div class="thead">
-            <!-- <div class="th" width="20"><strong>ID</strong></div> -->
             <div class="th"><strong>Page</strong></div>
             <div class="th"><strong>Deal status</strong></div>
             <div class="th"><strong>Featured Deal</strong></div>
             <div class="th"><strong>re-order</strong></div>
         </div>
     </div>
-    <!-- <thead class="last-row">
-        <tr>
-            <th width="20"><strong>ID</strong></th>
-            <th><strong>Page</strong></th>
-            <th><strong>Deal status</strong></th>
-            <th><strong>Featured Deal</strong></th>
-            <th><strong>re-order</strong></th>
-        </tr>
-    </thead>
-</table> -->
+
 <?php } else {
 	echo 'No Products added yet. Click to <a href="">Add New Product</a>';
 }?>
