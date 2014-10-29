@@ -11,84 +11,177 @@ table td {
 }
 .deal-wrapper {
     padding: 5px;
-    border: 1px solid #eee;
+    /* border: 1px solid #eee; */
     position: relative;
     margin-bottom: 10px;
+
 }
 .deal-wrapper .title {
-    font-size: 14px;
+    padding: 5px;
+    background-color: #3AABCD;
+
 }
 .deal-wrapper .title a {
     text-decoration: none;
+    color: #fff;
+}
+.deal-wrapper .title a h2{
+    font-size: 20px;
+    font-family: Arial;
+    color: #fff;
+    padding: 5px 14px;
+    margin: 0;
 }
 .deal-content {
     z-index: 10;
     min-height: 300px;
 }
 .deal-detail {
-    width: 60%;
+    width: 55%;
     float: left;
     ;
 }
 .deal-image {
-    width: 40%;
+    width: 45%;
     float: left;
 }
 .deal-image .img {
-    /* border: 1px solid #ccc; */
-    padding: 5px;
-    margin-top: 30px;
-    min-height: 300px;
+    padding: 5px 60px;
+    border: 1px solid #E0E0E0;
+    background: #fff;
+    box-shadow: -5px 5px 15px 0px #E0E0E0;
+/*     min-height: 300px; */
+}
+.deal-image img {
+    border: 0;
+}
+.deal-footer{
+    margin-top: 10px;
 }
 .deal-footer p {
-    font-size: 12px;
+    font-size: 14px;
+    font-family: Arial;
     clear: both;
+    margin: 0;
+    color: #999;
 }
 .deal-dates {
-    width: 90%;
-    margin: 0 auto;
-    padding: 10px;
-    text-align: center;
+    clear: both;
+    margin-top: 30px;
 }
 .deal-buynow {
     width: 100%;
     text-align: center;
-    padding: 10px;
     min-height: 25px;
 }
-.deal-buynow .price {
+.deal-buynow .deal-price{
+    width: 212px;
+    padding: 2px 4px;
+    color: #333;
+    font-weight: bold;
+    font-size: 45px;
+    line-height: 65px;
     float: left;
+    border: 1px solid #E6B300;
 }
-.deal-buynow .buynow {
-    float: right;
+/*.deal-buynow .buynow-btn{
+    width: 257px;
+    
+    background: #E6B300;
+}*/
+.deal-buynow .buynow-btn {
+    border: 1px solid #E6B300;
+    width: 220px;
+    padding: 2px 4px;
+    font-weight: bold;
+    font-size: 24px;
+    color: #fff;
+    line-height: 65px;
+    float: left;
+    position: relative;
+    background-color: #E6B300;
 }
-.myButton {
-    background-color: #44c767;
-    -moz-border-radius: 28px;
-    -webkit-border-radius: 28px;
-    border-radius: 28px;
-    border: 1px solid #18ab29;
-    display: inline-block;
-    cursor: pointer;
-    color: #fff !important;
-    font-family: arial;
-    font-size: 23px;
-    padding: 11px 90px;
-    text-decoration: none;
-    text-shadow: 0px 1px 0px #2f6627;
-}
-.myButton:hover {
-    background-color: #5cbf2a;
-    color: #ffffff;
-    text-decoration: none;
+.deal-buynow .buynow-btn:after {
+    left: 100%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(230, 179, 0, 0);
+    border-left-color: #E6B300;
+    border-width: 36px;
+    margin-top: -36px;
 }
 .featured {
     z-index: 5;
     position: absolute;
-    top: 0;
+    top: 2px;
     right: 0;
     width: 70px;
     border: 0 !important;
     padding: 0 !important;
     background: transparent !important;
+}
+.dod{
+    border: 1px solid #E0E0E0;
+    border-radius: 3px;
+    padding: 5px;
+}
+.lower-part{
+    padding: 15px 19px;
+    margin-top: 10px;
+}
+.price-savings{
+    text-align: center;
+    clear: both;
+    margin-top: 27px;
+}
+.price-savings .regular-price-box{
+    border: 1px solid #3AABCD;
+    width: 171px;
+    float: left;
+}
+.price-savings .saving-tage-box{
+    border: 1px solid #3AABCD;
+    width: 171px;
+    float: left;
+    margin-left: 20px;
+}
+.regular-price-box .reg-price{
+    color: #3AABCD;
+    padding: 10px 0; 
+    font-size: 45px;
+    line-height: 52px;
+    font-weight: bold;
+}
+.saving-tage-box .savings{
+   color: #3AABCD;
+    padding: 10px 0;
+    font-size: 45px;
+    line-height: 52px;
+    font-weight: bold;
+}
+.regular-price-box .reg-text, .saving-tage-box .savings-text{
+    background: #3AABCD;
+    color:#fff;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: Arial;
+    padding: 4px;
+    line-height: 30px;
+}
+.dot{
+    background: #fff;
+    border: 1px solid #fff;
+    width: 12px;
+    height: 12px;
+    border-radius: 12px;
+    display: inline-block;
+    position: absolute;
+    right: -12px;
+    z-index: 99;
+    top: 29px;
 }
