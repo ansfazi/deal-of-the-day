@@ -66,8 +66,16 @@ table td {
     color: #999;
 }
 .deal-dates {
-    clear: both;
+    width: 100%;
+    text-align: center;
     margin-top: 30px;
+}
+.deal-dates p{
+    margin: 0;
+}
+.deal-dates strong{
+    color: #3AABCD;
+    font-size: 20px;
 }
 .deal-buynow {
     width: 100%;
@@ -184,4 +192,9 @@ table td {
     right: -12px;
     z-index: 99;
     top: 29px;
+}
+.dealExpireTimer{
+    display: inline-block;
+    color: #3AABCD;
+    font-weight: bold;
 }
